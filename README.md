@@ -218,9 +218,9 @@ go build ./cmd/mcp-tools
 - [zrok Documentation](https://docs.zrok.io)
 - [MCP Specification](https://modelcontextprotocol.io)
 
-## Sponsors
+## Sponsor
 
-This project is sponsored by [NetFoundry](https://netfoundry.io), the creators of OpenZiti.
+MCP Gateway is sponsored by [NetFoundry](https://netfoundry.io) as part of its portfolio of solutions for secure workloads and agentic computing. NetFoundry is the creator of [OpenZiti](https://netfoundry.io/docs/openziti/) and [zrok](https://netfoundry.io/docs/zrok/getting-started).
 
 ## License
 
