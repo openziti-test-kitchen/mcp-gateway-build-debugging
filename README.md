@@ -4,6 +4,8 @@
 
 MCP Gateway lets AI assistants securely access internal tools without exposing public endpoints. Built on [OpenZiti](https://openziti.io) and [zrok](https://zrok.io), it provides cryptographically secure, zero trust connectivity with no attack surface.
 
+MCP Gateway is sponsored by [NetFoundry](https://netfoundry.io) as part of its portfolio of solutions for secure workloads and agentic computing. NetFoundry is the creator of [OpenZiti](https://netfoundry.io/docs/openziti/) and [zrok](https://netfoundry.io/docs/zrok/getting-started).
+
 ## The Trifecta
 
 Three simple components that work together:
@@ -217,10 +219,6 @@ go build ./cmd/mcp-tools
 - [OpenZiti Documentation](https://openziti.io/docs)
 - [zrok Documentation](https://docs.zrok.io)
 - [MCP Specification](https://modelcontextprotocol.io)
-
-## Sponsor
-
-MCP Gateway is sponsored by [NetFoundry](https://netfoundry.io) as part of its portfolio of solutions for secure workloads and agentic computing. NetFoundry is the creator of [OpenZiti](https://netfoundry.io/docs/openziti/) and [zrok](https://netfoundry.io/docs/zrok/getting-started).
 
 ## License
 
