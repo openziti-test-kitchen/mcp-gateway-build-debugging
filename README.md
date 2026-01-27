@@ -181,7 +181,7 @@ Options:
 - `--stateless` - Stateless mode (no session persistence)
 - `--json-response` - Prefer JSON responses over SSE streams
 
-The gateway and bridge natively serve MCP over HTTP/SSE through zrok. Use `mcp-tools http` when you need a local HTTP endpoint for clients that don't support zrok directly.
+The gateway and bridge natively serve MCP over HTTP/SSE through zrok. Use `mcp-tools http` when you need a local HTTP endpoint for clients that don't support the `stdio` transport provided by `mcp-tools` directly.
 
 ## Tool Filtering
 
