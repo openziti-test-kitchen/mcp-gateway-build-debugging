@@ -45,6 +45,8 @@ go install github.com/openziti/mcp-gateway/cmd/mcp-tools@latest
 
 ### 2. Enable zrok
 
+> **Note:** mcp-gateway requires zrok `v2.0.x` or later.
+
 ```bash
 zrok enable <your-zrok-token>  # get token at https://zrok.io
 ```
@@ -118,7 +120,7 @@ Run mcp-bridge on a remote machine to expose a local MCP server:
 
 ```bash
 # on remote server
-mcp-bridge run mcp-server-custom --args "--config" --args "/etc/custom.yml"
+mcp-bridge mcp-server-custom --config /etc/custom.yml
 # outputs share token
 
 # from anywhere
