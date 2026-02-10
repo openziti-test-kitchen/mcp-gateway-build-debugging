@@ -1,0 +1,9 @@
+version: 2
+builds:
+  - skip: true
+release:
+  draft: true
+  prerelease: auto
+  mode: append
+  extra_files:
+    - glob: ./dist/*
