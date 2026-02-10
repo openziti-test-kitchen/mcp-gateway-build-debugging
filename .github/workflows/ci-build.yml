@@ -23,17 +23,11 @@ jobs:
         with:
           go-version-file: ./go.mod
 
-      - name: go install
-        shell: bash
-        run: >
-          go install
-          -ldflags "-X github.com/openziti/mcp-gateway/build.Version=${{ github.ref }}
-          -X github.com/openziti/mcp-gateway/build.Hash=${{ github.sha }}"
-          ./...
+      - name: make install
+        run: make install
 
-      - name: go test
-        shell: bash
-        run: go test -v ./...
+      - name: make test
+        run: make test
 
       - name: solve GOBIN
         id: solve_go_bin
