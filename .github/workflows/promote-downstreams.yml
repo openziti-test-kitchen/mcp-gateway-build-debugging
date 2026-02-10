@@ -18,21 +18,23 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       version: ${{ steps.parse.outputs.version }}
+      major: ${{ steps.parse.outputs.major }}
     steps:
       - name: Parse Release Version
         id: parse
         shell: bash
         run: |
-          if [[ "${GITHUB_REF_NAME}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          if [[ "${GITHUB_REF_NAME}" =~ ^v([0-9]+)\.[0-9]+\.[0-9]+$ ]]; then
             echo "GITHUB_REF_NAME=${GITHUB_REF_NAME} is a stable release semver ref"
             echo "version=${GITHUB_REF_NAME#v}" | tee -a $GITHUB_OUTPUT
+            echo "major=v${BASH_REMATCH[1]}" | tee -a $GITHUB_OUTPUT
           else
             echo "GITHUB_REF_NAME=${GITHUB_REF_NAME} is not a stable release semver ref" >&2
             exit 1
           fi
 
   promote_docker:
-    name: Tag Container Image ${{ matrix.image.repo }}:latest
+    name: Promote Container Image ${{ matrix.image.repo }}
     needs: enforce_stable_semver
     runs-on: ubuntu-24.04
     strategy:
@@ -48,8 +50,13 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_API_TOKEN }}
 
       - name: Tag Latest
-        shell: bash
         run: >
           docker buildx imagetools create --tag
           ${{ matrix.image.repo }}:latest
+          ${{ matrix.image.repo }}:${{ needs.enforce_stable_semver.outputs.version }}
+
+      - name: Tag Major Version
+        run: >
+          docker buildx imagetools create --tag
+          ${{ matrix.image.repo }}:${{ needs.enforce_stable_semver.outputs.major }}
           ${{ matrix.image.repo }}:${{ needs.enforce_stable_semver.outputs.version }}

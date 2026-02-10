@@ -66,15 +66,13 @@ jobs:
           username: ${{ vars.DOCKER_HUB_API_USER || secrets.DOCKER_HUB_API_USER }}
           password: ${{ secrets.DOCKER_HUB_API_TOKEN }}
 
-      - name: Set Up Container Image Tags
-        env:
-          CONTAINER_IMAGE_REPO: ${{ vars.MCP_GATEWAY_CONTAINER_IMAGE_REPO || 'openziti/mcp-gateway' }}
-          CONTAINER_IMAGE_TAG: ${{ steps.semver.outputs.semver }}
-        id: tagprep
-        shell: bash
-        run: |
-          DOCKER_TAGS="${CONTAINER_IMAGE_REPO}:${CONTAINER_IMAGE_TAG}"
-          echo "DOCKER_TAGS=${DOCKER_TAGS}" | tee -a $GITHUB_OUTPUT
+      - name: Docker Metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ vars.MCP_GATEWAY_CONTAINER_IMAGE_REPO || 'openziti/mcp-gateway' }}
+          tags: |
+            type=semver,pattern={{version}},value=${{ inputs.release-version }}
 
       - name: Build & Push Multi-Platform Container Image to Hub
         uses: docker/build-push-action@v6
@@ -84,7 +82,8 @@ jobs:
           context: ${{ github.workspace }}/
           file: ${{ github.workspace }}/docker/images/mcp-gateway/Dockerfile
           platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.tagprep.outputs.DOCKER_TAGS }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             ARTIFACTS_DIR=./dist
           provenance: mode=max
